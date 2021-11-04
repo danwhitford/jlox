@@ -25,6 +25,13 @@ public class Lox {
         if (hadError)
             return;
 
+        Resolver resolver = new Resolver(interpreter);
+        resolver.resolve(statements);
+
+        // Stop if there was a resolution error.
+        if (hadError)
+            return;
+
         interpreter.interpret(statements);
     }
 
@@ -33,11 +40,18 @@ public class Lox {
         BufferedReader reader = new BufferedReader(input);
 
         for (; ; ) {
-            System.out.print("> ");
+            StringBuilder sb = new StringBuilder();
+
+            System.out.print(">> ");
             String line = reader.readLine();
-            if (line == null)
-                break;
-            run(line);
+            while (line.length() > 0) {
+                sb.append(line);
+                sb.append(' ');
+                System.out.print(".. ");
+                line = reader.readLine();
+            }
+
+            run(sb.toString());
             hadError = false;
         }
     }
