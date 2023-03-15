@@ -1,0 +1,9 @@
+class DansClass {
+    serveOn() {
+        return "scones";
+    }
+}
+
+var dan = DansClass();
+print DansClass;
+print dan;

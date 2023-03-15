@@ -7,15 +7,15 @@ import java.util.List;
 
 public class GenerateAst {
     public static void main(String[] args) throws IOException {
-        if (args.length != 1) {
-            System.err.println("Usage: generate_ast <output directory>");
-            System.exit(64);
+        String outputDir = "/Users/danielwhitford/workspace/JLox/src/com/craftinginterpreters/lox";
+        if (args.length > 0) {
+            outputDir = args[0];
         }
-        String outputDir = args[0];
 
         defineAst(outputDir, "Expr",
                 Arrays.asList("Assign   : Token name, Expr value", "Binary   : Expr left, Token operator, Expr right",
                         "Call     : Expr callee, Token paren, List<Expr> arguments",
+                        "Get      : Expr object, Token name",
                         "Grouping : Expr expression", "Literal  : Object value",
                         "Logical  : Expr left, Token operator, Expr right", "Unary    : Token operator, Expr right",
                         "Variable : Token name"
@@ -24,6 +24,7 @@ public class GenerateAst {
 
         defineAst(outputDir, "Stmt",
                 Arrays.asList("Block      : List<Stmt> statements",
+                        "Class      : Token name, List<Stmt.Function> methods",
                         "If         : Expr condition, Stmt thenBranch," + " Stmt elseBranch",
                         "Function   : Token name, List<Token> params," +
                                 " List<Stmt> body",

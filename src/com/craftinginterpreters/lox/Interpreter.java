@@ -14,22 +14,26 @@ import java.util.Map;
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     final Environment globals = new Environment();
-    private Environment environment = globals;
     private final Map<Expr, Integer> locals = new HashMap<>();
+    private Environment environment = globals;
 
     Interpreter() {
         globals.define("clock", new LoxCallable() {
             @Override
-            public int arity() { return 0; }
+            public int arity() {
+                return 0;
+            }
 
             @Override
             public Object call(Interpreter interpreter,
                                List<Object> arguments) {
-                return (double)System.currentTimeMillis() / 1000.0;
+                return (double) System.currentTimeMillis() / 1000.0;
             }
 
             @Override
-            public String toString() { return "<native fn>"; }
+            public String toString() {
+                return "<native fn>";
+            }
         });
     }
 
@@ -219,6 +223,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitBlockStmt(Block stmt) {
         executeBlock(stmt.statements, new Environment(environment));
+        return null;
+    }
+
+    @Override
+    public Void visitClassStmt(Stmt.Class stmt) {
+        environment.define(stmt.name.lexeme, null);
+        LoxClass klass = new LoxClass(stmt.name.lexeme);
+        environment.assign(stmt.name, klass);
         return null;
     }
 
