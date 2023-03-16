@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoxInstance {
-    private LoxClass klass;
     private final Map<String, Object> fields = new HashMap<>();
+    private LoxClass klass;
 
     LoxInstance(LoxClass klass) {
         this.klass = klass;
@@ -18,7 +18,8 @@ public class LoxInstance {
 
         LoxFunction method = klass.findMethod(name.lexeme);
         if (method != null) {
-            return method;
+            LoxFunction foo = method.bind(this);
+            return foo;
         }
 
         throw new RuntimeError(name, "Undefined property '" + name.lexeme + "'.");

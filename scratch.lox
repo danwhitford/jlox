@@ -1,11 +1,10 @@
-class DansClass {
-    serveOn() {
-        return "scones";
-    }
+class Cake {
+  taste() {
+    var adjective = "delicious";
+    print "The " + this.flavor + " cake is " + adjective + "!";
+  }
 }
 
-var dan = DansClass();
-dan.age = 34;
-dan.total = 165;
-
-print dan.serveOn();
+var cake = Cake();
+cake.flavor = "German chocolate";
+cake.taste(); // Prints "The German chocolate cake is delicious!".
